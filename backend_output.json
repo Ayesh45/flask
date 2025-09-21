@@ -1,0 +1,9 @@
+{
+    "path": "C:\\data\\my.csv or /home/user/data.csv",
+    "target": "goal",
+    "prompt_1": "normalize",
+    "prompt_2": "treat missing values",
+    "prompt_3": "treat outliers",
+    "_processed_by": "backend_dummy",
+    "_status": "done"
+}

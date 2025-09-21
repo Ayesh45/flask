@@ -1,0 +1,8 @@
+{
+    "filepath": "C:\\Users\\Aejaz\\Downloads\\linear_svm_dataset.csv",
+    "target_column": "target",
+    "steps": [
+        "normalization",
+        "missing data"
+    ]
+}

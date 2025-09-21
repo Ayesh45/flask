@@ -1,0 +1,8 @@
+{
+    "file_path": "C:\\data\\my.csv or /home/user/data.csv",
+    "target_column": "result",
+    "steps": [
+        "treat outliers",
+        "done"
+    ]
+}

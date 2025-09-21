@@ -1,0 +1,230 @@
+/* -------------------- General -------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* -------------------- Index Page -------------------- */
+.overlay {
+    background: url("/static/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    min-height: 100vh;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+/* Title styling */
+h1 {
+    font-size: 60px;                /* Big title */
+    color: #ffcc00;                 /* Yellow */
+    text-align: center;             /* Center aligned */
+    text-shadow: 2px 2px 8px black; /* subtle shadow for visibility */
+    margin-bottom: 20px;
+}
+
+/* Abstract text styling */
+.abstract {
+    background: rgba(0, 0, 0, 0.7); /* darker overlay for readability */
+    display: inline-block;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 900px;
+    line-height: 1.6;
+}
+
+/* Button description styling */
+.features {
+    text-align: left;
+    max-width: 700px;
+    margin: 30px auto;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.7);  /* darker overlay */
+    padding: 15px;
+    border-radius: 12px;
+    color: #fff; /* make text visible */
+}
+
+.features li { margin: 10px 0; }
+
+/* Buttons */
+.buttons {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.process-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 220px;
+    height: 220px;
+    font-size: 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background 0.3s;
+    text-align: center;
+    overflow: hidden;
+}
+
+.process-btn img {
+    width: 120px; 
+    height: 120px;
+    margin-bottom: 12px;
+    object-fit: contain; /* ensures icons don't stretch */
+    display: block;
+}
+
+.process-btn span { 
+    display: block; 
+    font-weight: bold; 
+    margin-top: 5px;
+}
+
+.process-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #00c6ff, #007bff);
+}
+
+/* Footer dark */
+.footer-dark {
+    margin-top: 50px;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.member { margin: 15px 0; text-align: center; }
+.member img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 8px; }
+.member p { margin: 0; font-size: 16px; color: white; }
+
+/* -------------------- Chatbot Page -------------------- */
+.chat-background {
+    background: url("/static/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.chat-container {
+    width: 450px;
+    max-height: 600px;
+    border-radius: 12px;
+    background: white; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.messages { 
+    flex-grow: 1; 
+    overflow-y: auto; 
+    margin-bottom: 15px; 
+    padding-right: 5px;
+}
+.bot, .user {
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+.bot { 
+    background: #e3f2fd; 
+    align-self: flex-start; 
+}
+.user { 
+    background: #d1ffd6; 
+    align-self: flex-end; 
+}
+
+.input-box { 
+    display: flex; 
+    flex-direction: column; 
+}
+.input-box input, 
+.input-box button {
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.input-box button { 
+    background: #007bff; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    transition: background 0.3s;
+}
+.input-box button:hover { 
+    background: #0056b3; 
+}
+
+/* JSON output styling */
+.json-output {
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;     
+    border-top: 6px solid #3498db; 
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

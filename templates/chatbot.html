@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot - {{ process_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="chat-background">
+<div class="chat-container">
+    <div class="messages" id="messages">
+        {% if stage == "start" %}
+            {% if process_name == "data_preprocessing" %}
+                <div class="bot">Hello! Please enter the full path of the CSV file you want to preprocess.</div>
+            {% else %}
+                <div class="bot">Hello! Please describe the dataset you need for {{ process_name }}.</div>
+            {% endif %}
+        {% elif stage == "target_column" %}
+            <div class="bot">Got it! File path: {{ filepath }}.<br>Now, please provide the target column name.</div>
+        {% elif stage == "preprocessing_steps" %}
+            {% if last_step %}
+                <div class="bot">Step added: {{ last_step }}.<br>
+                    Do you want to add more steps? Type another step, or type <b>no</b> to finish.</div>
+            {% else %}
+                <div class="bot">Target column set: {{ target_column }}.<br>
+                    Please enter a preprocessing step (e.g., missing data, normalization).</div>
+            {% endif %}
+        {% elif stage == "finished" %}
+            <div class="bot">Processing finished! Here is the backend output:</div>
+            <pre class="bot">{{ backend_output }}</pre>
+            {% if sample_data %}
+                <div class="bot">
+                    <b>Sample Data Preview:</b>
+                    <table border="1" style="width:100%; border-collapse: collapse;">
+                        <tr>
+                            {% for col in sample_data[0].keys() %}
+                                <th>{{ col }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in sample_data %}
+                            <tr>
+                                {% for val in row.values() %}
+                                    <td>{{ val }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {% if stage != "finished" %}
+        <form class="input-box" id="chat-form" action="/submit/{{ process_name }}" method="post">
+            {% if stage == "start" %}
+                {% if process_name == "data_preprocessing" %}
+                    <input type="text" name="csv_path" placeholder="Enter CSV file path" required>
+                    <input type="hidden" name="stage" value="start">
+                    <button type="submit">Submit Path</button>
+                {% else %}
+                    <input type="text" name="user_input" placeholder="Type your request..." required>
+                    <input type="hidden" name="stage" value="start">
+                    <button type="submit">Send</button>
+                {% endif %}
+            {% elif stage == "target_column" %}
+                <input type="text" name="target_column" placeholder="Enter target column" required>
+                <input type="hidden" name="stage" value="target_column">
+                <button type="submit">Submit Target</button>
+            {% elif stage == "preprocessing_steps" %}
+                <input type="text" name="preprocess_step" placeholder="Enter preprocessing step or 'no' to finish" required>
+                <input type="hidden" name="stage" value="preprocessing_steps">
+                <button type="submit">Submit Step</button>
+            {% endif %}
+        </form>
+    {% endif %}
+
+    <div id="spinner" class="loading-spinner" style="display:none;">
+        <div class="spinner"></div>
+    </div>
+</div>
+
+<script>
+const form = document.getElementById('chat-form');
+const messagesDiv = document.getElementById('messages');
+const spinner = document.getElementById('spinner');
+
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const stageInput = form.querySelector('input[name="stage"]');
+        const stage = stageInput ? stageInput.value : '';
+        const process = "{{ process_name }}";
+
+        // Show spinner only for preprocessing when calling backend
+        let showSpinner = false;
+        if(process === 'data_preprocessing' && stage === 'preprocessing_steps') {
+            const stepInput = form.querySelector('input[name="preprocess_step"]');
+            const step = stepInput ? stepInput.value.trim().toLowerCase() : '';
+            if(step === 'no') showSpinner = true;
+        }
+
+        if(showSpinner) spinner.style.display = 'flex';
+
+        const formData = new FormData(form);
+
+        fetch(form.action, { method: 'POST', body: formData })
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newMessages = doc.getElementById('messages').innerHTML;
+            messagesDiv.innerHTML = newMessages;
+
+            if(showSpinner) spinner.style.display = 'none';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            const inputField = form.querySelector('input[type=text]');
+            if(inputField && (!showSpinner)) inputField.value = '';
+        })
+        .catch(err => {
+            console.error(err);
+            if(showSpinner) spinner.style.display = 'none';
+        });
+    });
+}
+</script>
+</body>
+</html>
